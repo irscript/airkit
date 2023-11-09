@@ -1,6 +1,6 @@
 
 --测试
-target("test")
+target("main")
     set_kind("binary")
     add_deps("AirkitCore")
     add_files("**.cpp")

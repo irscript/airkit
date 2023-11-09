@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <cstdarg>
 #include <cstdio>
+#include <clocale>
+#include <cstring>
 
 #include <unistd.h>
 #include <pthread.h>
@@ -19,6 +21,12 @@
 using flt32_t = float;
 using flt64_t = double;
 using cstring = const char *;
+
+// 通用宏定义
+
+#define this_file() __builtin_FILE()
+#define this_line() __LINE__
+#define this_func() __PRETTY_FUNCTION__
 
 // 配置宏
 #include <Airkit/airConfig.h>
