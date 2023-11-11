@@ -64,6 +64,17 @@ namespace airkit
         // 释放内存对象
         inline static void dealloc(void *blk, size_t size) { GlobalPools.dealloc(blk, size); }
 
+        // 内存对象分配
+        template <typename Type, typename... Args>
+        inline static Type *objnew(Args... args) { return constructor((Type *)alloc(sizeof(Type)), args...); };
+        // 内存对象释放
+        template <typename Type>
+        inline static void objfree(Type *obj)
+        {
+            constructor(obj);
+            dealloc(obj, sizeof(Type));
+        };
+
     private:
         static IMemPools &GlobalPools;
     };

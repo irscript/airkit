@@ -543,8 +543,8 @@ namespace airkit
                 // 分配并初始化管理节点
                 MemBigNode *node = (MemBigNode *)malloc(sizeof(MemBigNode));
                 MemSys::constructor<MemBigNode>(node);
-                //node->init();
-                // 插入管理链表中
+                // node->init();
+                //  插入管理链表中
                 mBigs.insertEntry(node);
                 node->mUsing = 1; // 标记该管理节点正在使用
                 // 获取管理项
@@ -611,8 +611,8 @@ namespace airkit
             // 分配并初始化管理节点
             MemPageNode *node = (MemPageNode *)malloc(sizeof(MemPageNode));
             MemSys::constructor<MemPageNode>(node);
-            //node->init();
-            // 插入管理链表中
+            // node->init();
+            //  插入管理链表中
             root.insertEntry(node);
             node->mUsing = 1; // 标记该管理节点正在使用
             // 获取管理项
