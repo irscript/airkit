@@ -22,6 +22,7 @@ using flt32_t = float;
 using flt64_t = double;
 using cstring = const char *;
 
+
 // 通用宏定义
 
 #define this_file() __builtin_FILE()

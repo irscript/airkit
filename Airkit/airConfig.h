@@ -5,8 +5,6 @@
  *
  */
 
-
-
 /** 平台宏
  *
  * window ：Air_Plat_Window
@@ -23,8 +21,15 @@
  *
  */
 
-/** 其他开关宏
- * 
- * Air_Enable_Track
+/** CPU地址空间大小
+ * Air_CPU_Bit32
+ * Air_CPU_Bit64
  */
+#define Air_CPU_Bit64
+
+// ----------------------其他开关宏-------------------------------
+
+// 跟踪API开启宏
 #define Air_Enable_Track
+//内存调试开启宏
+#define Air_Enable_MemDbg

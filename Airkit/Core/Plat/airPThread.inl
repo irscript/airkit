@@ -16,7 +16,7 @@ inline void Spinlock::lock()
     pthread_spin_lock((pthread_spinlock_t *)&mHandle);
 }
 
-int Spinlock::trylock()
+inline int Spinlock::trylock()
 {
     return pthread_spin_trylock((pthread_spinlock_t *)&mHandle);
 }
