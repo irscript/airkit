@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     domain.init(16, 8);
     for (int i = 0; i < 20; i++)
     {
-        i % 2 == 0 ? domain.addTask(new TaskA(i) ): domain.addTask(new TaskB(i));
+        i % 2 == 0 ? domain.addTask(new TaskA(i)) : domain.addTask(new TaskB(i));
     }
     domain.wait();
     return 0;

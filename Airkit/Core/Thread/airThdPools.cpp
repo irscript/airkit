@@ -17,6 +17,9 @@ namespace airkit
                     break;
             }
             mTasks.insert(item, task);
+            // 判断是否可以添加线程
+            if (mPools.mIdled == 0 && mPools.mHave != mPools.mMax)
+                mPools.add(*this);
             // 解锁任务池
             mCond.unlock();
             // 通知线程可以处理
