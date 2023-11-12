@@ -20,7 +20,7 @@ namespace airkit
             PoolPageSize = 4 * 1024,        // 内存池大小 4K 4 * 1024
             BlockMaxSize = 512,             // 最大内存块
 
-#ifdef Air_CPU_Bit64
+#ifdef Air_CPU_Bit32
             BlockAlignSize = 8,  // 内存地址块对齐大小
             IndexShiftValue = 3, // 查找引索的偏移值
 #else

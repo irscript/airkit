@@ -62,8 +62,6 @@ namespace airkit
     protected:
         IListNode<Node> mRoot; // 链表根节点
         size_t mCount;         // 节点计数
-    public:
-        IList() { init(); }
         // 初始化节点
         inline void init()
         {
@@ -71,6 +69,15 @@ namespace airkit
             mRoot.setNode(node, node);
             mCount = 0;
         }
+
+    public:
+        IList() { init(); }
+
+        // 是否为空
+        inline bool isEmpty() const { return 0 == mCount; }
+        // 获取节点数量
+        inline size_t getCount() const { return mCount; }
+
         // 获取根节点
         inline Node *root() { return (Node *)&mRoot; }
         // 获取头结点
@@ -81,6 +88,18 @@ namespace airkit
         inline Node *back() { return mRoot.getPrev(); }
 
         // 插入节点
+        inline void insert(Node *where, Node *node)
+        {
+            auto root = (Node *)&mRoot;
+            if (node != nullptr &&
+                where != nullptr &&
+                node != where &&
+                node != root)
+            {
+                where->insertTail(node);
+                ++mCount;
+            }
+        }
         inline void insertEntry(Node *node)
         {
             auto root = (Node *)&mRoot;

@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <clocale>
 #include <cstring>
+#include <ctime>
 
 #include <unistd.h>
 #include <pthread.h>
@@ -21,7 +22,6 @@
 using flt32_t = float;
 using flt64_t = double;
 using cstring = const char *;
-
 
 // 通用宏定义
 

@@ -71,7 +71,7 @@ namespace airkit
         template <typename Type>
         inline static void objfree(Type *obj)
         {
-            constructor(obj);
+            destructor(obj);
             dealloc(obj, sizeof(Type));
         };
 

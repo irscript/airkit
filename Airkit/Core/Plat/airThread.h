@@ -34,48 +34,93 @@ namespace airkit
     struct Mutex
     {
     public:
-        Mutex();
+        Mutex(int32_t shared = false);
         ~Mutex();
 
         // 锁定
         void lock();
+        // 时间段内锁定互斥量
+        bool timedlock(size_t ns);
         bool trylock();
         void unlock();
 
     protected:
+        friend struct Condition;
         uintptr_t mHandle; // 互斥量句柄
     };
     struct MutexLock
     {
     public:
-        inline MutexLock() { mMutex.lock(); }
-        inline ~MutexLock() { mMutex.unlock(); }
+        inline MutexLock(Mutex &handle) : mHandle(handle) { mHandle.lock(); }
+        inline ~MutexLock() { mHandle.unlock(); }
 
     protected:
-        Mutex mMutex; // 互斥量句柄
+        Mutex &mHandle; // 互斥量句柄
     };
 
     // 条件变量
     struct Condition
     {
-        Condition();
+        Condition(int32_t shared = false);
         ~Condition();
 
-        void emit();
+        // 锁定
+        inline void lock() { mMutex.lock(); }
+        // 解锁
+        inline void unlock() { mMutex.unlock(); }
+        // 等待
         void wait();
+        bool timedwait(size_t ns);
+        // 通知
+        void signal();
+        void broadcast();
 
     protected:
-        uintptr_t mMutex;
-        uintptr_t mSemp;
+        uintptr_t mHandle; // 条件变量句柄
+        Mutex mMutex;      // 对应的互斥量
     };
 
-    using ThreadID = uintptr_t;
     // 线程定义
     struct Thread
     {
-    public:
-        Thread();
-        ~Thread();
+        // 线程ID
+        using ID = uintptr_t;
+        // 静态工作函数
+        using WorkerFunc = void *(*)(void *);
+
+        inline Thread() : mHandle(0) {}
+        inline ~Thread() { mHandle = 0; }
+
+        bool join(uintptr_t &retval);
+        bool detch();
+
+        bool setName(cstring name);
+        bool getName(char *name, size_t len);
+
+        bool cancel();
+        bool signal(int sig);
+
+        void run(WorkerFunc task, void *userptr);
+
+        static bool setName(ID thd, cstring name);
+        static bool getName(ID thd, char *name, size_t len);
+
+        // 获取当前线程ID
+        static ID getSelf();
+        // 初始化主线程ID
+        static inline void InitMainID() { mMainID = getSelf(); }
+        // 是否是主线程
+        static inline bool isMainID() { return mMainID == getSelf(); }
+        // 获取主线程ID
+        static inline ID getMainID() { return mMainID; }
+
+        static void exit(uintptr_t code);
+        static bool cancel(ID thd);
+        static bool signal(ID thd, int sig);
+
+    protected:
+        uintptr_t mHandle; // 线程句柄
+        static ID mMainID; // 组线程
     };
 
 // 实现
